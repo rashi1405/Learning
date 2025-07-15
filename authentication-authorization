@@ -1,0 +1,104 @@
+**Authentication vs Authorization** 
+
+---
+
+# 🔐 Authentication vs Authorization in Detail
+
+Both Authentication and Authorization are critical components of application security, but they serve different purposes. Let’s break it down:
+
+---
+
+## 📌 Definitions
+
+**Authentication** means verifying who the user is.
+**Authorization** means verifying what the user has access to.
+
+---
+
+## 🧠 Key Differences
+
+* **Purpose**: Authentication confirms user identity. Authorization grants access to resources.
+* **Happens When?**: Authentication happens before authorization. Authorization comes after authentication.
+* **Data Involved**: Authentication involves username, password, OTP, or biometrics. Authorization involves roles, permissions, and access rules.
+* **Example Question**: Authentication asks, "Who are you?" Authorization asks, "Are you allowed to do this?"
+* **Example**: Authentication is logging in using email and password. Authorization is getting access to the admin dashboard if the user is an admin.
+* **Controlled By**: Authentication is controlled by the login/auth system (e.g., Django Auth). Authorization is controlled by Role-Based Access Control (RBAC), policies.
+* **Protocols/Technologies**: Authentication uses OAuth2, JWT, SAML, LDAP. Authorization uses ACLs, RBAC, scopes in OAuth2, and Django permissions.
+* **Outcome**: The user is verified in Authentication. The user is allowed or denied specific actions in Authorization.
+
+---
+
+## ✅ Example in Django
+
+**Authentication**:
+Using Django's `authenticate` and `login` functions, you verify if a user exists and credentials are valid. If yes, the user is authenticated. If not, the credentials are invalid.
+
+**Authorization**:
+Using decorators like `@login_required` and `@permission_required`, you ensure that only logged-in users with specific permissions (like `view_dashboard`) can access certain views or actions.
+
+---
+
+## 🚀 Real-World Analogy
+
+Imagine you're entering a secure building.
+Authentication is when you show your ID to the security guard.
+Authorization is when the guard checks if you're allowed to enter specific rooms.
+
+Just because you're authenticated (you are John Doe) doesn’t mean you're authorized to enter the server room.
+
+---
+
+## 🔐 Common Authentication Methods
+
+* **Basic Auth**: Username/password.
+* **JWT (JSON Web Token)**: Token-based authentication for APIs.
+* **OAuth2**: Token-based with scopes, commonly used in Google and GitHub logins.
+* **SAML**: Used in enterprise-level Single Sign-On (SSO) solutions.
+* **LDAP**: Directory-based authentication (e.g., Active Directory).
+
+---
+
+## 🔐 Common Authorization Models
+
+* **RBAC (Role-Based Access Control)**: Assign roles like "admin" or "editor" to users.
+* **ABAC (Attribute-Based Access Control)**: Grant access based on user, device, or environment attributes.
+* **ACL (Access Control Lists)**: Define a list of permissions per object or resource.
+* **Scope-based**: Common in OAuth2, restricts actions like `read:users` or `write:orders`.
+
+---
+
+## 🌐 Authentication + Authorization in APIs (JWT Example)
+
+A user logs in by sending a POST request to `/login` with their username and password. The server responds with an access token like `eyJhbGciOiJIUzI1...` which proves the user is authenticated.
+
+To access protected routes like `/admin/dashboard`, the user sends the token in the `Authorization` header as `Bearer eyJhbGciOiJIUzI1...`.
+
+The token proves authentication, and its claims (like `"role": "admin"`) are used to handle authorization.
+
+---
+
+## 🔍 Summary
+
+Authentication verifies identity. Authorization checks permissions.
+Authentication always happens first.
+Example: Logging in with username/password is authentication. Getting access only if your role is admin is authorization.
+Tools for authentication include Django Auth, JWT, and OAuth. Tools for authorization include Django permissions and RBAC.
+
+---
+
+## ✅ Best Practices
+
+**Authentication**:
+
+* Use strong password hashing algorithms like bcrypt or argon2.
+* Implement Multi-Factor Authentication (MFA).
+* Use standard and secure protocols like OAuth2 and OpenID Connect.
+
+**Authorization**:
+
+* Use RBAC or ABAC for scalable permission control.
+* Never rely only on frontend code for access control.
+* Ensure all routes and resources are protected on the backend.
+* Always check token scopes or permissions server-side.
+
+---
