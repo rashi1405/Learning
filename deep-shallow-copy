@@ -1,0 +1,131 @@
+# 🧠 Deep Copy vs Shallow Copy in Python
+
+When you copy objects in Python, it’s important to understand what gets copied, just the references to objects or the entire object and its contents. This distinction is between shallow copy and deep copy.
+
+---
+
+## 📋 Shallow Copy
+
+A shallow copy creates a new object, but does not create copies of nested objects. Instead, it copies references to the nested objects.
+ˀ
+**✅ Characteristics:
+
+* Outer container is copied.
+* Inner objects (e.g., lists, dicts) are shared (point to the same memory).
+
+**📌 Example:**ˀ
+
+import copy
+original = \[\[1, 2], \[3, 4]]
+shallow = copy.copy(original)
+
+shallow\[0]\[0] = 999
+
+print("Original:", original)
+print("Shallow:", shallow)
+
+**🔍 Output:**
+Original: \[\[999, 2], \[3, 4]]
+Shallow:  \[\[999, 2], \[3, 4]]
+
+🧠 Even though we modified shallow, original also changed because they share inner lists.
+
+---
+
+## 🧬 Deep Copy
+
+A deep copy creates a new object, and recursively copies all nested objects. This results in a completely independent clone.
+
+**✅ Characteristics:**
+
+* Entire structure is duplicated.
+* Changes in the copied object do not affect the original.
+
+**📌 Example:**
+
+import copy
+original = \[\[1, 2], \[3, 4]]
+deep = copy.deepcopy(original)
+
+deep\[0]\[0] = 999
+
+print("Original:", original)
+print("Deep:", deep)
+
+**🔍 Output:**
+Original: \[\[1, 2], \[3, 4]]
+Deep:     \[\[999, 2], \[3, 4]]
+
+🧠 The original remains unaffected, because the nested lists were also copied independently.
+
+---
+
+## 🔬 Internal Memory Structure
+
+copy.copy() – copies one level (outer object), references inside.
+copy.deepcopy() – creates new memory for everything, recursively.
+
+---
+
+## ⚖️ Shallow vs Deep Copy – Comparison
+
+**Shallow Copy (copy.copy):**
+
+* Copies outer object: Yes
+* Copies inner objects: No
+* Independent from original: No (inner items shared)
+* Performance: Fast
+* Use case: Immutable nested values
+
+**Deep Copy (copy.deepcopy):**
+
+* Copies outer object: Yes
+* Copies inner objects: Yes
+* Independent from original: Yes
+* Performance: Slower (recursive)
+* Use case: Complex or mutable structures
+
+---
+
+## 📛 Common Pitfalls
+
+a = \[\[1, 2]]
+b = a.copy()       # shallow copy
+b\[0]\[0] = 99       # also changes a
+
+c = copy.deepcopy(a)
+c\[0]\[0] = 88       # a is untouched
+
+🛑 Avoid shallow copy if inner objects are mutable and will be modified.
+
+---
+
+## 🔧 Custom Objects & Deep Copy
+
+For classes with nested objects, deepcopy() uses **deepcopy**() internally (if defined).
+
+class Person:
+  def **init**(self, name, friends):
+    self.name = name
+    self.friends = friends
+
+import copy
+p1 = Person("Alice", \["Bob", "Eve"])
+p2 = copy.deepcopy(p1)
+p2.friends\[0] = "Charlie"
+
+print(p1.friends)  # \['Bob', 'Eve']
+
+---
+
+## 📦 Summary
+
+**Shallow Copy**
+Independent Inner Objects? No
+Use When... Inner data won’t be changed
+
+**Deep Copy**
+Independent Inner Objects? Yes
+Use When... Nested structures or mutation needed
+
+---

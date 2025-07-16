@@ -1,0 +1,119 @@
+# 🌀 Python Decorators Explained
+
+Decorators are powerful tools that **modify the behavior of a function or class without changing its actual code**.
+They **wrap another function**, and since both functions are callable, the decorator ultimately **returns a callable**.
+
+In simple terms:
+**A decorator wraps a function and modifies its behavior (but not permanently).**
+
+---
+
+## 🧩 FUNCTIONS
+
+Before we understand decorators, let’s go through the basics of **functions**.
+
+A **function** in Python returns a value based on the given arguments.
+
+---
+
+## 🎓 Key Concepts Before Decorators
+
+### 🧱 First-Class Objects
+
+In Python, **everything is treated as an object** – this includes data types and **functions too**.
+Hence, a function is also a **first-class object** and can be:
+
+* Assigned to a variable
+* Passed as an argument
+* Returned from another function
+
+### 🔁 Inner Functions
+
+In Python, you can **define a function inside another function**.
+This is called an **inner function**, and it's a key concept in how decorators work.
+
+---
+
+## 🎀 Decorators
+
+**Decorators** allow you to **extend or modify the behavior** of a function *without changing its source code*.
+They are used in many real-world applications like:
+
+* 🪵 Logging
+* 🐞 Debugging
+* 🔐 Authentication
+* ⏱️ Measuring execution time
+* ...and more!
+
+---
+
+## 💡 Let's Understand with an Example
+
+### 🧪 Example 1:
+
+Explaining the use of decorators in Python.
+
+**Three functions are used: `TUF`, `decorator`, and `xyz`**
+
+---
+
+### 🔍 Function Roles
+
+**🧰 decorator:**
+
+* This function **accepts another function** as an argument.
+* It defines an inner function `TUF`, which **adds new behavior** before and after calling the original function.
+* Finally, it returns the inner function `TUF`.
+
+**🔂 TUF:**
+
+* This is the **inner function** that gets returned.
+* It adds custom print statements before and after the original function call.
+
+**📢 xyz:**
+
+* This is the **original function** we want to decorate.
+* It simply prints a message.
+
+---
+
+### 📝 Syntax of Decorators
+
+You can write:
+
+`xyz = decorator(xyz)`
+
+Or use syntactic sugar:
+
+`@decorator` before the function definition. This is the more readable and preferred way.
+
+---
+
+## 🧪 Code Example
+
+```python
+def decorator(func):
+ 
+  def TUF():
+    print("This article is written by")
+    func()
+    print("Intern")
+  
+  return TUF
+ 
+@decorator
+def xyz():
+  print("Rashi")
+ 
+xyz()
+```
+
+---
+
+### 🔍 Output:
+
+This article is written by
+Rashi
+Intern 
+
+---
